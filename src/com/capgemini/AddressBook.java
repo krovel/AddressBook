@@ -73,9 +73,10 @@ public class AddressBook {
     }
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the no of contacts you want to add-");
+		int no=Integer.parseInt(sc.nextLine());
 		AddressBook b = new AddressBook();
-		boolean choice = true;
-		while (choice) {
+		for(int i=0;i<no;i++) {
 			System.out.println("Enter contact details- ");
 			System.out.print("Enter first name: ");
 			String fname = sc.nextLine();
@@ -95,14 +96,6 @@ public class AddressBook {
 			String phone = sc.nextLine();
 			contact = new Contact(fname, lname, email, add, state, city, zip, phone);
 			b.addContact();
-			System.out.println("Add new contact? 1-yes 2-no ");
-			int bin = Integer.parseInt(sc.nextLine());
-			if (bin==1) {
-				choice = true;
-			} else {
-				choice = false;
-				break;
-			}
 		}
 		System.out.println("First name of the contact you wnat to edit: ");
 		String name = sc.nextLine();
