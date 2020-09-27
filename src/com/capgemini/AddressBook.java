@@ -62,7 +62,15 @@ public class AddressBook {
 			}
 		}
 	}
-
+    public void remove(String name) {
+        for (Contact con : Addbook) {
+			if (con.getFname().equals(name)) {
+				Addbook.remove(con);
+				System.out.println("Removed");
+                break;
+			}
+        }
+    }
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		AddressBook b = new AddressBook();
@@ -99,5 +107,8 @@ public class AddressBook {
 		System.out.println("First name of the contact you wnat to edit: ");
 		String name = sc.nextLine();
 		b.editContact(name);
+		System.out.println("First name of the contact you wnat to remove: ");
+		String rem = sc.nextLine();
+		b.remove(rem);
 	}
 }
