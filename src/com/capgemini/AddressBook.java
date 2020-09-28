@@ -4,104 +4,73 @@ import java.util.Scanner;
 import java.util.*;
 
 public class AddressBook {
-	public static Contact contact;
-	Scanner sc=new Scanner(System.in);
-	ArrayList<Contact> Addbook;
-	public AddressBook() {
-		Addbook = new ArrayList<Contact>();
+	public static String Fname,Lname,Email,Add,City,State,Pno;
+	public static int Zip;
+	public AddressBook(String fname,String lname,String email,String add,String city,String state, int zip,String pno) {
+		Fname = fname;
+		Lname = lname;
+		Email = email;
+		Add = add;
+		City = city;
+		State = state;
+		Zip = zip;
+		Pno = pno;
 	}
-	public void addContact() {
-		Addbook.add(contact);
-	}
-	public void editContact(String key) {
-		for (Contact con : Addbook) {
-			if (con.getFname().equals(key)) {
-				System.out.println("Enter the field you want to edit: ");
-				System.out.println("1.First Name\t2.Last Name\t3.Email\t4.Address\t5.City\t6.State\t7.Zip\t8.Phone Number");
-				int ch = Integer.parseInt(sc.nextLine());
-				switch (ch) {
-				case 1:
-					System.out.println("New first name: ");
-					con.setFname(sc.nextLine());
-					break;
-				case 2:
-					System.out.println("New last name: ");
-					con.setLname(sc.nextLine());
-					break;
-				case 3:
-					System.out.println("New email: ");
-					con.setEmail(sc.nextLine());
-					break;
-				case 4:
-					System.out.println("New address: ");
-					con.setAdd(sc.nextLine());
-					break;
-				case 5:
-					System.out.println("New city: ");
-					con.setCity(sc.nextLine());
-					break;
-				case 6:
-					System.out.println("New state: ");
-					con.setState(sc.nextLine());
-					break;
-				case 7:
-					System.out.println("New Zip: ");
-					con.setZip(Integer.parseInt(sc.nextLine()));
-					break;
-				case 8:
-					System.out.println("New phone no.: ");
-					con.setPno(sc.nextLine());
-					break;
-				default:
-					System.out.println("No contact found !");
-					break;
-				}
-				System.out.println("Updated contact-");
-				con.display();
-				break;
-			}
-		}
-	}
-    public void remove(String name) {
-        for (Contact con : Addbook) {
-			if (con.getFname().equals(name)) {
-				Addbook.remove(con);
-				System.out.println("Removed");
-                break;
-			}
-        }
-    }
+	public String toString() {
+		return Fname+" " +Lname+" "+Email+" "+Add+" "+City+" "+State+" "+Zip+" "+Pno;
+	}	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the no of contacts you want to add-");
-		int no=Integer.parseInt(sc.nextLine());
-		AddressBook b = new AddressBook();
-		for(int i=0;i<no;i++) {
-			System.out.println("Enter contact details- ");
-			System.out.print("Enter first name: ");
-			String fname = sc.nextLine();
-			System.out.print("Enter last name: ");
-			String lname = sc.nextLine();
-			System.out.print("Enter Address: ");
-			String add = sc.nextLine();
-			System.out.print("Enter email: ");
-			String email = sc.nextLine();
-			System.out.print("Enter State: ");
-			String state = sc.nextLine();
-			System.out.print("Enter city: ");
-			String city = sc.nextLine();
-			System.out.print("Enter ZIP: ");
-			int zip = Integer.parseInt(sc.nextLine());
-			System.out.print("Enter phone no: ");
-			String phone = sc.nextLine();
-			contact = new Contact(fname, lname, email, add, state, city, zip, phone);
-			b.addContact();
+		System.out.println("Number of AddressBooks you want to add: ");
+		HashMap<String, ArrayList<AddressBook>> dictionary = new HashMap<String, ArrayList<AddressBook>>();
+		int n = Integer.parseInt(sc.nextLine());
+		for (int j = 0; j < n; j++) {
+			String bname;
+			while(true) {
+			System.out.println("Name of the Address book:");
+			bname = sc.nextLine();
+			int flag = 0;
+				for (Map.Entry<String, ArrayList<AddressBook>> e : dictionary.entrySet()) {
+					if(e.getKey().equals(bname)) {
+						flag++;
+					}
+				}
+				if(flag == 0) {
+					break;
+				}
+				else {
+					System.out.println("ERROR !! AddressBook already exists. Can't create AddressBook of same name");
+				}
+			}
+			ArrayList<AddressBook> book = new ArrayList<AddressBook>();
+			System.out.println("Number of persons you want to add in Addressbook: ");
+			int number = Integer.parseInt(sc.nextLine());
+			for (int i = 0; i < number; i++) {
+				System.out.println("Enter the details of contact " +(i + 1)+ ": ");
+				System.out.println("Enter the first name:");
+				String fname = sc.nextLine();
+				System.out.println("Enter the last name:");
+				String lname = sc.nextLine();
+				System.out.println("Enter the Email:");
+				String email = sc.nextLine();
+				System.out.println("Enter the Address:");
+				String add = sc.nextLine();
+				System.out.println("Enter the City:");
+				String city = sc.nextLine();
+				System.out.println("Enter the State:");
+				String state = sc.nextLine();
+				System.out.println("Enter the Zip:");
+				int zip = Integer.parseInt(sc.nextLine());
+				System.out.println("Enter the phone number:");
+				String pno = sc.nextLine();
+				AddressBook contact = new AddressBook(fname, lname, email, add, city, state, zip, pno);
+				book.add(contact);
+			}
+			dictionary.put(bname, book);
 		}
-		System.out.println("First name of the contact you wnat to edit: ");
-		String name = sc.nextLine();
-		b.editContact(name);
-		System.out.println("First name of the contact you wnat to remove: ");
-		String rem = sc.nextLine();
-		b.remove(rem);
+		for (Map.Entry<String, ArrayList<AddressBook>> e : dictionary.entrySet()) {
+			System.out.println("The details of AddressBook '" +e.getKey()+"' is: ");
+			System.out.println(e.getValue());
+		}
 	}
 }
